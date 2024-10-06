@@ -8,3 +8,6 @@
 /dist/*
 /temp-dependencies-layer/*
 /temp-index/*
+
+# LOCALSTACK
+/volume/*
