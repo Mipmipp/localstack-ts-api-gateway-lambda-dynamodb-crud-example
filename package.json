@@ -6,8 +6,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prebuild": "del /q dist",
-    "build": "esbuild 'src/index.ts' --banner:js='/* global handler */' --bundle --minify --sourcemap --platform=node --target=es2020 --outfile=dist/index.js && esbuild 'src/**/*.ts' --bundle --minify --sourcemap --platform=node --target=es2020 --outdir=dist",
-    "postbuild": "cd dist && 7z a -tzip index.zip *"
+    "create-package": "node -e \"require('fs').writeFileSync('temp/package.json', JSON.stringify({ name: 'temp', version: '1.0.0', dependencies: {} }))\"",
+    "build:index": "esbuild src/index.ts --banner:js=\"/* global handler */\" --bundle --minify --sourcemap --platform=node --target=es2020 --outdir=dist",
+    "build:src": "esbuild \"src/**/*.ts\" --bundle --minify --sourcemap --platform=node --target=es2020 --outdir=dist",
+    "build:dependencies": "mkdir temp && node -e \"const fs = require('fs'); const pkg = require('./package.json'); fs.writeFileSync('temp/package.json', JSON.stringify({ name: 'temp', version: '1.0.0', dependencies: pkg.dependencies }, null, 2));\" && cd temp && npm install --omit=dev",
+    "build": "npm run build:index && npm run build:src && npm run build:dependencies",
+    "postbuild": "cd dist && 7z a -tzip index.zip * && cd ../temp && 7z a -tzip ../dist/dependencies-layer.zip node_modules/* && cd .. && rmdir /s /q temp"
   },
   "repository": {
     "type": "git",
@@ -38,7 +42,6 @@
     "@types/aws-lambda": "^8.10.145",
     "@types/node": "^22.7.4",
     "@types/uuid": "^10.0.0",
-    "esbuild": "^0.24.0",
     "typescript": "^5.6.2"
   },
   "dependencies": {
