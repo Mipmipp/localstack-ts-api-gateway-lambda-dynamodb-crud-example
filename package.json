@@ -4,7 +4,10 @@
   "description": "An example of a serverless CRUD API built with TypeScript, integrating API Gateway, Lambda, and DynamoDB, all simulated locally with LocalStack for local development and testing.",
   "main": "src/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prebuild": "del /q dist",
+    "build": "esbuild 'src/index.ts' --banner:js='/* global handler */' --bundle --minify --sourcemap --platform=node --target=es2020 --outfile=dist/index.js && esbuild 'src/**/*.ts' --bundle --minify --sourcemap --platform=node --target=es2020 --outdir=dist",
+    "postbuild": "cd dist && 7z a -tzip index.zip *"
   },
   "repository": {
     "type": "git",
