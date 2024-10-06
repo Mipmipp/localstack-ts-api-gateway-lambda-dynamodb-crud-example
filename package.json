@@ -31,6 +31,14 @@
     "localstack"
   ],
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.145",
+    "@types/node": "^22.7.4",
+    "@types/uuid": "^10.0.0",
     "typescript": "^5.6.2"
+  },
+  "dependencies": {
+    "dynamoose": "^4.0.1",
+    "http-status-codes": "^2.3.0",
+    "uuid": "^10.0.0"
   }
 }
