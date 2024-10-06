@@ -1,0 +1,33 @@
+{
+  "name": "localstack-ts-api-gateway-lambda-dynamodb-crud-example",
+  "version": "1.0.0",
+  "description": "An example of a serverless CRUD API built with TypeScript, integrating API Gateway, Lambda, and DynamoDB, all simulated locally with LocalStack for local development and testing.",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mipmipp/localstack-ts-api-gateway-lambda-dynamodb-crud-example.git"
+  },
+  "author": "Mipmipp",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Mipmipp/localstack-ts-api-gateway-lambda-dynamodb-crud-example/issues"
+  },
+  "homepage": "https://github.com/Mipmipp/localstack-ts-api-gateway-lambda-dynamodb-crud-example#readme",
+  "keywords": [
+    "docker",
+    "lambda",
+    "crud",
+    "typescript",
+    "jest",
+    "docker-compose",
+    "api-gateway",
+    "example",
+    "dynamodb",
+    "supertest",
+    "dynamoose",
+    "localstack"
+  ]
+}
