@@ -6,4 +6,5 @@
 
 # TRANSPILED OUTPUT
 /dist/*
-/temp/*
+/temp-dependencies-layer/*
+/temp-index/*
