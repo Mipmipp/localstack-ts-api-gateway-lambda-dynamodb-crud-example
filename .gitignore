@@ -3,3 +3,7 @@
 
 # ENVIRONMENT VARIABLES
 .env
+
+# TRANSPILED OUTPUT
+/dist/*
+/temp/*
