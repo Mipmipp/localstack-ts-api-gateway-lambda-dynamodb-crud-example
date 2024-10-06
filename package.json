@@ -11,7 +11,9 @@
     "build:src": "esbuild \"src/**/*.ts\" --bundle --minify --sourcemap --platform=node --target=es2020 --outdir=temp-index",
     "build:dependencies": "mkdir temp-dependencies-layer && node -e \"const fs = require('fs'); const pkg = require('./package.json'); fs.writeFileSync('temp-dependencies-layer/package.json', JSON.stringify({ name: 'temp-dependencies-layer', version: '1.0.0', dependencies: pkg.dependencies }, null, 2));\" && cd temp-dependencies-layer && npm install --omit=dev",
     "build": "npm run build:index && npm run build:src && npm run build:dependencies",
-    "postbuild": "cd temp-index && 7z a -tzip ../dist/index.zip * && cd ../temp-dependencies-layer && 7z a ../dist/dependencies-layer.zip node_modules/* && cd .. && rmdir /s /q temp-index temp-dependencies-layer"
+    "postbuild": "cd temp-index && 7z a -tzip ../dist/index.zip * && cd ../temp-dependencies-layer && 7z a ../dist/dependencies-layer.zip node_modules/* && cd .. && rmdir /s /q temp-index temp-dependencies-layer",
+    "start:dynamodb": "cmd /c \"data\\bat-scripts\\start_local_dynamodb.bat\"",
+    "seed:dynamodb": "cmd /c \"data\\bat-scripts\\seed_local_dynamodb.bat\""
   },
   "repository": {
     "type": "git",
