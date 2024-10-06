@@ -30,6 +30,7 @@
     "dynamoose",
     "localstack"
   ],
+  "type": "commonjs",
   "devDependencies": {
     "@types/aws-lambda": "^8.10.145",
     "@types/node": "^22.7.4",
