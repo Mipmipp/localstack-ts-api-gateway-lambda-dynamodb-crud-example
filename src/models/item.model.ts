@@ -8,6 +8,6 @@ const ddb = new dynamoose.aws.ddb.DynamoDB({
 
 dynamoose.aws.ddb.set(ddb);
 
-const ItemModel = dynamoose.model("ItemsTable", itemSchema);
+const ItemModel = dynamoose.model("items", itemSchema);
 
 export default ItemModel;

@@ -16,7 +16,7 @@ export const handler = async (
     case "POST":
       return createItem(event);
     case "GET":
-      if (event.pathParameters) {
+      if (event.pathParameters?.itemId) {
         return getItem(event);
       }
       return getAllItems();

@@ -16,8 +16,8 @@ const itemSchema = new dynamoose.Schema({
     required: false,
   },
   createdAt: {
-    type: Date,
-    default: () => new Date(),
+    type: String,
+    default: () => new Date().toISOString(),
   },
 });
 
