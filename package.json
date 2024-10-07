@@ -12,8 +12,10 @@
     "build:dependencies": "mkdir temp-dependencies-layer && node -e \"const fs = require('fs'); const pkg = require('./package.json'); fs.writeFileSync('temp-dependencies-layer/package.json', JSON.stringify({ name: 'temp-dependencies-layer', version: '1.0.0', dependencies: pkg.dependencies }, null, 2));\" && cd temp-dependencies-layer && npm install --omit=dev",
     "build": "npm run build:index && npm run build:src && npm run build:dependencies",
     "postbuild": "cd temp-index && 7z a -tzip ../dist/index.zip * && cd ../temp-dependencies-layer && 7z a ../dist/dependencies-layer.zip node_modules/* && cd .. && rmdir /s /q temp-index temp-dependencies-layer",
-    "start:dynamodb": "cmd /c \"data\\bat-scripts\\start_local_dynamodb.bat\"",
-    "seed:dynamodb": "cmd /c \"data\\bat-scripts\\seed_local_dynamodb.bat\""
+    "start:local-db": "cross-env-shell data/scripts/start_local_dynamodb.sh",
+    "seed:local-db": "cross-env-shell data/scripts/seed_local_dynamodb.sh",
+    "start:local-api": "cross-env-shell data/scripts/start_local_api_gateway_and_lambda.sh",
+    "start:dev": "docker compose up -d && cross-env-shell data/scripts/wait-for-docker.sh && npm run start:local-db && npm run seed:local-db && npm run start:local-api"
   },
   "repository": {
     "type": "git",
