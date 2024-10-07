@@ -11,3 +11,4 @@
 
 # LOCALSTACK
 /volume/*
+.local.env
