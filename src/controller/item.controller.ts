@@ -13,7 +13,7 @@ const createItem = async (event: APIGatewayEvent) => {
 };
 
 const getItem = async (event: APIGatewayEvent) => {
-  const itemId = event.pathParameters?.id;
+  const itemId = event.pathParameters?.itemId;
 
   if (!itemId) {
     return createResponse(StatusCodes.BAD_REQUEST, {
@@ -33,7 +33,7 @@ const getAllItems = async () => {
 };
 
 const updateItem = async (event: APIGatewayEvent) => {
-  const itemId = event.pathParameters?.id;
+  const itemId = event.pathParameters?.itemId;
 
   if (!itemId) {
     return createResponse(StatusCodes.BAD_REQUEST, {
@@ -48,7 +48,7 @@ const updateItem = async (event: APIGatewayEvent) => {
 };
 
 const deleteItem = async (event: APIGatewayEvent) => {
-  const itemId = event.pathParameters?.id;
+  const itemId = event.pathParameters?.itemId;
 
   if (!itemId) {
     return createResponse(StatusCodes.BAD_REQUEST, {
