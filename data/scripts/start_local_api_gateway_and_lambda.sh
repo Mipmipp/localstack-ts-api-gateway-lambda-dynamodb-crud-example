@@ -303,7 +303,7 @@ ENDPOINT="${BASE_ENDPOINT}/restapis/${API_ID}/${STAGE}/_user_request_/items"
 
 # Save the endpoint to a local environment file
 echo "Saving the API endpoint to the local environment file..."
-echo "LOCAL_API_ENDPOINT=${ENDPOINT}" >> .local.env
+echo "LOCAL_API_ENDPOINT=${ENDPOINT}" > .local.env
 echo ${GENERIC_SUCCESS_LOG}
 
 # Output the API endpoint
