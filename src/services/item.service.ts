@@ -8,12 +8,7 @@ class ItemService {
 
   async get(itemId: string) {
     const item = await ItemModel.get(itemId);
-
-    if (!item) {
-      throw new Error(ErrorMessages.ITEM_NOT_FOUND);
-    }
-
-    return item;
+    return item || null;
   }
 
   async getAll() {
@@ -21,20 +16,14 @@ class ItemService {
   }
 
   async update(itemId: string, itemData: ItemDTO) {
-    const updatedItem = await ItemModel.update(itemId, itemData);
-
-    if (!updatedItem) {
-      throw new Error(ErrorMessages.ITEM_NOT_FOUND);
+    if (!itemData.name) {
+      throw new Error(ErrorMessages.INVALID_DATA);
     }
-
-    return updatedItem;
+    return await ItemModel.update(itemId, itemData);
   }
 
   async delete(itemId: string) {
-    const item = await this.get(itemId);
-    await ItemModel.delete(itemId);
-
-    return item;
+    return await ItemModel.delete(itemId);
   }
 }
 
