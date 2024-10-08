@@ -4,7 +4,8 @@
   "description": "An example of a serverless CRUD API built with TypeScript, integrating API Gateway, Lambda, and DynamoDB, all simulated locally with LocalStack for local development and testing.",
   "main": "src/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:e2e": "cross-env NODE_ENV=automated_tests jest --testRegex='.*\\.e2e\\.spec\\.ts$'",
+    "test:handler": "cross-env NODE_ENV=automated_tests jest --testRegex='.*\\.handler\\.spec\\.ts$' --coverage",
     "prebuild": "del /q dist",
     "create-package": "node -e \"require('fs').writeFileSync('temp-dependencies-layer/package.json', JSON.stringify({ name: 'temp-dependencies-layer', version: '1.0.0', dependencies: {} }))\"",
     "build:index": "esbuild src/index.ts --banner:js=\"/* global handler */\" --bundle --minify --sourcemap --platform=node --target=es2020 --outdir=temp-index",
@@ -15,7 +16,9 @@
     "start:local-db": "cross-env-shell data/scripts/start_local_dynamodb.sh",
     "seed:local-db": "cross-env-shell data/scripts/seed_local_dynamodb.sh",
     "start:local-api": "cross-env-shell data/scripts/start_local_api_gateway_and_lambda.sh",
-    "start:dev": "docker compose up -d && cross-env-shell data/scripts/wait-for-docker.sh && npm run start:local-db && npm run seed:local-db && npm run start:local-api"
+    "wait-for-docker": "cross-env-shell data/scripts/wait-for-docker.sh",
+    "start:dev": "docker compose down && npm run build && docker compose up -d && npm run wait-for-docker && npm run start:local-db && npm run seed:local-db && npm run start:local-api && docker-compose logs -f",
+    "test:dev": "docker compose down && npm run build && docker compose up -d && npm run wait-for-docker && npm run start:local-db && npm run seed:local-db && npm run start:local-api && npm run test:e2e"
   },
   "repository": {
     "type": "git",
@@ -43,10 +46,17 @@
   ],
   "type": "commonjs",
   "devDependencies": {
+    "@jest/types": "^29.6.3",
     "@types/aws-lambda": "^8.10.145",
     "@types/node": "^22.7.4",
+    "@types/supertest": "^6.0.2",
     "@types/uuid": "^10.0.0",
     "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5",
+    "esbuild": "^0.24.0",
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.5",
     "typescript": "^5.6.2"
   },
   "dependencies": {
