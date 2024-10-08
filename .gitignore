@@ -12,3 +12,6 @@
 # LOCALSTACK
 /volume/*
 .local.env
+
+# TESTING
+/coverage/*
