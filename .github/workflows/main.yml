@@ -26,3 +26,26 @@ jobs:
 
       - name: Run tests
         run: npm run test:handler
+
+      - name: Install jq
+        run: sudo apt-get install jq
+
+      - name: Generate coverage badge
+        run: |
+          COVERAGE=$(cat coverage/coverage-summary.json | jq '.total.lines.pct')
+          echo "![Coverage](https://img.shields.io/badge/coverage-${COVERAGE}%25-brightgreen)" > coverage/coverage_badge.md
+
+      - name: Update README with coverage badge
+        run: |
+          BADGE_CONTENT=$(cat coverage/coverage_badge.md)
+          sed -i "s|!\[Coverage\](.*)|${BADGE_CONTENT}|" README.md
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "${{ secrets.GIT_USER_EMAIL }}"
+          git config --local user.name "${{ secrets.GIT_USER_NAME }}"
+          git add README.md
+          git commit -m "Update coverage badge"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
