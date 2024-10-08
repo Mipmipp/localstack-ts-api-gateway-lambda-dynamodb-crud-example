@@ -45,9 +45,8 @@ const getItem = async (event: APIGatewayEvent) => {
 };
 
 const getAllItems = async () => {
-  console.log("getAllItems controller");
   const items = await itemService.getAll();
-  console.log("items", items);
+
   try {
     return createResponse(StatusCodes.OK, items);
   } catch (error) {
