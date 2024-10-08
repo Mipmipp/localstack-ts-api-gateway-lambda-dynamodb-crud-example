@@ -52,7 +52,8 @@ jobs:
           git config --local user.name "${{ secrets.GIT_USER_NAME }}"
           git add README.md
           git commit -m "Update coverage badge"
-          git push origin update-coverage-badge
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/OWNER/REPO.git HEAD:update-coverage-badge
+
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
