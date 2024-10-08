@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # Esto es necesario para acceder al historial completo
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
@@ -26,3 +28,40 @@ jobs:
 
       - name: Run tests
         run: npm run test:handler
+
+      - name: Install jq
+        run: sudo apt-get install jq
+
+      - name: Generate coverage badge
+        run: |
+          COVERAGE=$(cat coverage/coverage-summary.json | jq '.total.lines.pct')
+          echo "![Coverage](https://img.shields.io/badge/coverage-${COVERAGE}%25-brightgreen)" > coverage/coverage_badge.md
+
+      - name: Create and switch to a new branch
+        run: |
+          git checkout -b update-coverage-badge
+
+      - name: Update README with coverage badge
+        run: |
+          BADGE_CONTENT=$(cat coverage/coverage_badge.md)
+          sed -i "s|!\[Coverage\](.*)|${BADGE_CONTENT}|" README.md
+
+      - name: Show repository information
+        run: |
+          echo "Current Repository: $(git remote -v)"
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "${{ secrets.GIT_USER_EMAIL }}"
+          git config --local user.name "${{ secrets.GIT_USER_NAME }}"
+          git add README.md
+          git commit -m "Update coverage badge"
+          git push origin HEAD:update-coverage-badge
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          title: "Update coverage badge"
+          body: "This PR updates the coverage badge in README."
+          base: main
+          head: update-coverage-badge
