@@ -16,7 +16,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # Esto es necesario para acceder al historial completo
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
@@ -46,16 +46,17 @@ jobs:
           BADGE_CONTENT=$(cat coverage/coverage_badge.md)
           sed -i "s|!\[Coverage\](.*)|${BADGE_CONTENT}|" README.md
 
+      - name: Show repository information
+        run: |
+          echo "Current Repository: $(git remote -v)"
+
       - name: Commit and push changes
         run: |
           git config --local user.email "${{ secrets.GIT_USER_EMAIL }}"
           git config --local user.name "${{ secrets.GIT_USER_NAME }}"
           git add README.md
           git commit -m "Update coverage badge"
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/OWNER/REPO.git HEAD:update-coverage-badge
-
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Mipmipp/localstack-ts-api-gateway-lambda-dynamodb-crud-example.git HEAD:update-coverage-badge
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
