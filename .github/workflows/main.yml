@@ -12,13 +12,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    services:
-      docker:
-        image: docker:20.10.7
-        options: --privileged
-        ports:
-          - 4566:4566
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -31,5 +24,5 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests with handler
+      - name: Run tests
         run: npm run test:handler
