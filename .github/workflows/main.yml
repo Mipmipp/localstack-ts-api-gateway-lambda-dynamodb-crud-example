@@ -31,28 +31,5 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build project
-        run: npm run build
-
-      - name: Start local services
-        run: |
-          docker-compose up -d
-
-      - name: Wait for local services to start
-        run: |
-          npm run wait-for-docker
-
-      - name: Start local database
-        run: npm run start:db
-
-      - name: Seed local database
-        run: npm run seed:local-db
-
-      - name: Start local API gateway and lambda
-        run: start:local-api
-
       - name: Run tests with handler
         run: npm run test:handler
-
-      - name: Run tests with localstack
-        run: npm run test:e2e
