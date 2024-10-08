@@ -1,0 +1,58 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      docker:
+        image: docker:20.10.7
+        options: --privileged
+        ports:
+          - 4566:4566
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18.18.0"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Start local services
+        run: |
+          docker-compose up -d
+
+      - name: Wait for local services to start
+        run: |
+          npm run wait-for-docker
+
+      - name: Start local database
+        run: npm run start:db
+
+      - name: Seed local database
+        run: npm run seed:local-db
+
+      - name: Start local API gateway and lambda
+        run: start:local-api
+
+      - name: Run tests with handler
+        run: npm run test:handler
+
+      - name: Run tests with localstack
+        run: npm run test:e2e
