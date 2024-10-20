@@ -6,7 +6,7 @@
   "scripts": {
     "test:e2e": "cross-env NODE_ENV=automated_tests jest --testRegex='.*\\.e2e\\.spec\\.ts$'",
     "test:handler": "cross-env NODE_ENV=automated_tests jest --testRegex='.*\\.handler\\.spec\\.ts$' --coverage --coverageReporters=json-summary",
-    "prebuild": "del /q dist",
+    "prebuild": "rimraf dist",
     "create-package": "node -e \"require('fs').writeFileSync('temp-dependencies-layer/package.json', JSON.stringify({ name: 'temp-dependencies-layer', version: '1.0.0', dependencies: {} }))\"",
     "build:index": "esbuild src/index.ts --banner:js=\"/* global handler */\" --bundle --minify --sourcemap --platform=node --target=es2020 --outdir=temp-index",
     "build:src": "esbuild \"src/**/*.ts\" --bundle --minify --sourcemap --platform=node --target=es2020 --outdir=temp-index",
