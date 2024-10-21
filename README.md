@@ -1,4 +1,4 @@
-![Coverage](https://img.shields.io/badge/coverage-84.25%25-brightgreen)
+[![LocalStack Pods Launchpad](https://localstack.cloud/gh/launch-pod-badge.svg)](https://app.localstack.cloud/launchpad?url=https://raw.githubusercontent.com/localstack/cloud-pod-badge/main/MyOwnPod) ![ts](https://badgen.net/badge/Built%20With/TypeScript/blue) ![Coverage](https://img.shields.io/badge/coverage-84.25%25-brightgreen)
 
 # Introduction
 This repository is an example of a basic CRUD application, designed to test and work locally with [API Gateway](https://aws.amazon.com/api-gateway/) and [Lambda](https://aws.amazon.com/lambda/). It utilizes [TypeScript](https://www.typescriptlang.org/) and [DynamoDB](https://aws.amazon.com/dynamodb/) as the database ([Dynamoose](https://dynamoosejs.com/getting_started/Introduction) as an optional ORM library).
